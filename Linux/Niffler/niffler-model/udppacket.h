@@ -5,8 +5,9 @@
 #include <pcap.h>
 
 class UDPPacket : public BasePacket{
-    UDPPacket(const u_char *data, const pcap_pkthdr *header, int offset);
-    QString ParseHeader(const u_char *data, int size);
+    public:
+        UDPPacket(const u_char *data, const pcap_pkthdr *header, int offset);
+        QString ParseHeader(const u_char *data, int size);
 };
 
 #endif // UDPPACKET_H
