@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# Shadow builds
+*/build*/*
+
+# Temp
+*.user
