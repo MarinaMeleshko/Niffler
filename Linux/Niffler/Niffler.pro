@@ -26,10 +26,21 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        niffler-model/sniffer.cpp \
+        niffler-model/tcppacket.cpp \
+        niffler-model/basepacket.cpp \
+        niffler-model/udppacket.cpp \
+        niffler-model/arppacket.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+        niffler-model/basepacket.h \
+        niffler-model/sniffer.h \
+        niffler-model/protocol_codes.h \
+        niffler-model/tcppacket.h \
+        niffler-model/udppacket.h \
+        niffler-model/arppacket.h
 
 FORMS += \
         mainwindow.ui
