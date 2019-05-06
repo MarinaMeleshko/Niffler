@@ -2,8 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTabWidget>
 
 #include<stdio.h>
+
+#include "niffler-model/sniffer.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,8 +20,19 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_radioARP_clicked();
+
+    void on_radioIp_clicked();
+
+    void on_radioAll_clicked();
+
 private:
     Ui::MainWindow *ui;
+    Sniffer *sniffer;
+
+    void InitSniffer();
+    void InitPacketsTable();
 };
 
 #endif // MAINWINDOW_H
