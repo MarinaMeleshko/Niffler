@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTabWidget>
+#include <QTableWidgetItem>
 
 #include<stdio.h>
 
@@ -29,7 +30,9 @@ class MainWindow : public QMainWindow{
 
         void on_radioAll_clicked();
 
-    signals:
+        void on_packetsTable_itemClicked(QTableWidgetItem *item);
+
+signals:
         void PacketsRequested();
 
     private:

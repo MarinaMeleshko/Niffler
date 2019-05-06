@@ -49,14 +49,15 @@ void MainWindow::AddPacket(BasePacket *packet){
 }
 
 void MainWindow::on_radioARP_clicked(){
-
+    sniffer -> GetPackets(2);
 }
 
 void MainWindow::on_radioIp_clicked(){
-
+    sniffer -> GetPackets(1);
 }
 
 void MainWindow::on_radioAll_clicked(){
+    sniffer -> GetPackets(0);
 }
 
 void MainWindow::InitPacketsTable(){
@@ -83,4 +84,13 @@ void MainWindow::InitSniffer(){
     connect(sniffer, SIGNAL(PacketRecieved(BasePacket*)), this, SLOT(AddPacket(BasePacket*)));
 
     connect(this, SIGNAL(destroyed()), sniffer, SLOT(quit()));
+}
+
+void MainWindow::on_packetsTable_itemClicked(QTableWidgetItem *item)
+{
+    QTableWidgetItem* packet_item = item -> tableWidget() -> item(item -> row(), 0);
+    QString str = sniffer -> GetPacketParsedData(packet_item -> text().toInt());
+
+    ui -> packetInfo -> clear();
+    ui -> packetInfo -> setText(str);
 }
