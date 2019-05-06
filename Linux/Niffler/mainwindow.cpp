@@ -14,6 +14,14 @@ MainWindow::~MainWindow(){
     delete ui;
 }
 
+void MainWindow::PullPackets(QList<BasePacket> *packets){
+
+}
+
+void MainWindow::AddPacket(BasePacket *packet){
+
+}
+
 void MainWindow::on_radioARP_clicked(){
 
 }
@@ -42,5 +50,12 @@ void MainWindow::InitPacketsTable(){
 }
 
 void MainWindow::InitSniffer(){
+    sniffer = new Sniffer();
+    sniffer -> moveToThread(sniffer);
+    sniffer -> start();
 
+    connect(sniffer, SIGNAL(PacketPushed(QList<PacketBase>*)), this, SLOT(PullPackets(QList<PacketBase>*)));
+    connect(sniffer, SIGNAL(PacketRecieved(PacketBase*)), this, SLOT(AddPacket(PacketBase*)));
+
+    connect(this, SIGNAL(destroyed()), sniffer, SLOT(quit()));
 }
