@@ -129,12 +129,19 @@ QString Sniffer::GetPacketParsedData(int id){
 }
 
 void Sniffer::run(){
-    char errbuf[2000];
+    char *dev, errbuf[PCAP_ERRBUF_SIZE];
     pcap_t *handle;
     const u_char *packet;
     struct pcap_pkthdr hdr;
 
-    handle = pcap_open_live("eth0", 65536 , 1 , 0 , errbuf);
+    dev = pcap_lookupdev(errbuf);
+
+    if (dev == NULL){
+        fprintf(stderr, "Couldn't find default device: %s\n", errbuf);
+        return;
+    }
+
+    handle = pcap_open_live(dev, BUFSIZ, 100 , 1000 , errbuf);
     if (handle == NULL){
         qDebug() << "Couldn't open device";
         return;
