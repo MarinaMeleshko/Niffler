@@ -14,6 +14,7 @@
 #include "tcppacket.h"
 #include "udppacket.h"
 #include "arppacket.h"
+#include "packetfilter.h"
 
 #include <QThread>
 #include <QList>
@@ -26,7 +27,7 @@ class Sniffer : public QThread{
         ~Sniffer();
 
     public slots:
-        void GetPackets(int);
+        void GetPackets(PacketFilter);
         QString GetPacketParsedData(int);
 
     private slots:
@@ -39,7 +40,7 @@ class Sniffer : public QThread{
 
     private:
         QList<BasePacket> *packetList;
-        int filterType;
+        PacketFilter filterType;
 
         void processPacket(u_char *args, const pcap_pkthdr *header, const u_char *buffer);
     protected:

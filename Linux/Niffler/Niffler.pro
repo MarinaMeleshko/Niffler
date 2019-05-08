@@ -40,7 +40,8 @@ HEADERS += \
         niffler-model/protocol_codes.h \
         niffler-model/tcppacket.h \
         niffler-model/udppacket.h \
-        niffler-model/arppacket.h
+        niffler-model/arppacket.h \
+        packetfilter.h
 
 FORMS += \
         mainwindow.ui

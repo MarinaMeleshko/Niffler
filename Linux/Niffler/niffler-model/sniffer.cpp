@@ -1,11 +1,12 @@
 #include "sniffer.h"
 
+
 #include <QDebug>
 
 Sniffer::Sniffer(QThread *parent) :QThread(parent){
     packetList = new QList<BasePacket>();
     connect(this, SIGNAL(PacketProcessed(BasePacket*)), this, SLOT(savePacket(BasePacket*)));
-    filterType = 0;
+    filterType = PacketFilter::All;
 }
 
 Sniffer::~Sniffer(){
@@ -14,15 +15,15 @@ Sniffer::~Sniffer(){
     this->wait();
 }
 
-void Sniffer::GetPackets(int type){
+void Sniffer::GetPackets(PacketFilter type){
     filterType = type;
     QList<BasePacket> *temp = new QList<BasePacket>();
     QList<BasePacket>::iterator i;
     switch(type){
-    case 0:
+    case PacketFilter::All:
         emit PacketPushed(packetList);
         break;
-    case 1:
+    case PacketFilter::IP:
         for (i = packetList->begin(); i != packetList->end(); ++i){
             if (i->getTypeId() == 2 || i->getTypeId() == 3){
                 temp->append(*i);
@@ -30,7 +31,7 @@ void Sniffer::GetPackets(int type){
         }
         emit PacketPushed(temp);
         break;
-    case 2:
+    case PacketFilter::ARP:
         for (i = packetList->begin(); i != packetList->end(); ++i){
             if (i->getTypeId() == 4){
                 temp->append(*i);
@@ -45,15 +46,15 @@ void Sniffer::savePacket(BasePacket *packet){
     packet->id = packetList->count() + 1;
     packetList->append(*packet);
     switch(filterType){
-    case 0:
+    case PacketFilter::All:
         emit PacketRecieved(packet);
         break;
-    case 1:
+    case PacketFilter::IP:
         if (packet->getTypeId() == 2 || packet->getTypeId() == 3){
             emit PacketRecieved(packet);
         }
         break;
-    case 2:
+    case PacketFilter::ARP:
         if (packet->getTypeId() == 4){
             emit PacketRecieved(packet);
         }

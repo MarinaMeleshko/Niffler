@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "niffler-model/sniffer.h"
+#include "packetfilter.h"
 
 #include <Qt>
 
@@ -49,17 +50,17 @@ void MainWindow::CreateTableWidgetItem(QString value, int row, int column){
 }
 
 void MainWindow::on_radioARP_clicked(){
-    sniffer -> GetPackets(2);
+    sniffer -> GetPackets(PacketFilter::ARP);
     InitHeaderView();
 }
 
 void MainWindow::on_radioIp_clicked(){
-    sniffer -> GetPackets(1);
+    sniffer -> GetPackets(PacketFilter::IP);
     InitHeaderView();
 }
 
 void MainWindow::on_radioAll_clicked(){
-    sniffer -> GetPackets(0);
+    sniffer -> GetPackets(PacketFilter::All);
     InitHeaderView();
 }
 
@@ -95,7 +96,7 @@ void MainWindow::InitSniffer(){
 
 void MainWindow::on_packetsTable_itemClicked(QTableWidgetItem *item)
 {
-    QTableWidgetItem* packet_item = item -> tableWidget() -> item(item -> row(), 0);
+    QTableWidgetItem* packet_item = item -> tableWidget() -> item(item -> row(), 3);
     QString str = sniffer -> GetPacketParsedData(packet_item -> text().toInt());
 
     ui -> packetInfo -> clear();
