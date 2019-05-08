@@ -96,8 +96,9 @@ void MainWindow::InitSniffer(){
 
 void MainWindow::on_packetsTable_itemClicked(QTableWidgetItem *item)
 {
-    QTableWidgetItem* packet_item = item -> tableWidget() -> item(item -> row(), 3);
-    QString str = sniffer -> GetPacketParsedData(packet_item -> text().toInt());
+    QTableWidgetItem* packetItem = item -> tableWidget() -> item(item -> row(), 3);
+    int packetId = packetItem -> text().toInt();
+    QString str = sniffer -> GetPacketParsedData(packetId);
 
     ui -> packetInfo -> clear();
     ui -> packetInfo -> setText(str);
