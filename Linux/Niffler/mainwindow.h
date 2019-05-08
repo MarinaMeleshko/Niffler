@@ -41,6 +41,8 @@ signals:
 
         void InitSniffer();
         void InitPacketsTable();
+        void InitHeaderView();
+        void CreateTableWidgetItem(QString, int, int);
 };
 
 #endif // MAINWINDOW_H

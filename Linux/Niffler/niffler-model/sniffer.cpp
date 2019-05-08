@@ -141,7 +141,7 @@ void Sniffer::run(){
         return;
     }
 
-    handle = pcap_open_live(dev, BUFSIZ, 100 , 1000 , errbuf);
+    handle = pcap_open_live(dev, BUFSIZ, 1, 1000 , errbuf);
     if (handle == NULL){
         qDebug() << "Couldn't open device";
         return;
